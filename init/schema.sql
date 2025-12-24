@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS 'trip' (
+CREATE TABLE IF NOT EXISTS 'trips' (
   id TEXT PRIMARY KEY,
   destination TEXT NOT NULL,
   start_date DATETIME,
