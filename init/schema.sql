@@ -12,13 +12,31 @@ CREATE TABLE IF NOT EXISTS 'emails_to_invite' (
   id TEXT PRIMARY KEY,
   trip_id TEXT,
   email TEXT NOT NULL,
-  FOREIGN KEY (trip_id) REFERENCES trip(id)
+  FOREIGN KEY (trip_id) REFERENCES trips(id)
 );
 
 CREATE TABLE IF NOT EXISTS 'links' (
   id TEXT PRIMARY KEY,
   trip_id TEXT,
   link TEXT NOT NULL,
-  title TEXT, NOT NULL,
-  FOREIGN KEY (trip_id) REFERENCES trip(id)
+  title TEXT NOT NULL,
+  FOREIGN KEY (trip_id) REFERENCES trips(id)
+)
+
+CREATE TABLE IF NOT EXISTS 'participants' (
+  id TEXT PRIMARY KEY,
+  trip_id TEXT NOT NULL,
+  emails_to_invite_id TEXT NOT NULL,
+  name TEXT NOT NULL,
+  is_confirmed INTEGER,
+  FOREIGN KEY (trip_id) REFERENCES trips(id),
+  FOREIGN KEY (emails_to_invite_id) REFERENCES emails_to_invite(id)
+)
+
+CREATE TABLE IF NOT EXISTS 'activities' (
+  id TEXT PRIMARY KEY,
+  trip_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  occurs_at DATETIME,
+  FOREIGN KEY (trip_id) REFERENCES trips(id)
 )
