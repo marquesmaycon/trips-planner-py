@@ -3,6 +3,8 @@ import uuid
 from src.models.repositories.trips_repository import TripsRepository
 from src.models.repositories.emails_to_invite_repository import EmailsToInviteRepository
 
+from src.drivers.email_sender import send_email
+
 class TripCreator:
   def __init__(self, trip_repository: TripsRepository, emails_repository: EmailsToInviteRepository) -> None:
     self.__trip_repository = trip_repository
@@ -24,6 +26,11 @@ class TripCreator:
             "trip_id": trip_id,
             "email": email
           })
+      
+      send_email(
+        [body['owner_email']],
+        f"https://localhost:3000/trips/{trip_id}/confirm",
+      )
       
       return {
         "body": { "id": trip_id },

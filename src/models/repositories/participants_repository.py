@@ -36,23 +36,12 @@ class ParticipantsRepository:
         FROM participants as p 
         JOIN emails_to_invite as e 
           ON p.emails_to_invite_id = e.id
-        WHERE trip_id = ? 
+        WHERE e.trip_id = ? 
       """,
       (trip_id,)
     )
     
-    rows = cursor.fetchall()
-    
-    participants = []
-    for row in rows:
-      participants.append({
-        "id": row[0],
-        "trip_id": row[1],
-        "emails_to_invite_id": row[2],
-        "name": row[3],
-        "is_confirmed": bool(row[4]) if row[4] is not None else None,
-      })
-    
+    participants = cursor.fetchall()
     return participants
   
   def update_participant_status(self, participant_id: str)-> None:
